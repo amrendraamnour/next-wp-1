@@ -44,7 +44,10 @@ export interface WordPressResponse<T> {
   headers: WordPressPaginationHeaders;
 }
 
-const USER_AGENT = "Next.js WordPress Client";
+// Use a browser-like User-Agent to avoid some anti-bot blocks on the WP host.
+const USER_AGENT =
+  process.env.WORDPRESS_USER_AGENT ||
+  "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36";
 const CACHE_TTL = 3600; // 1 hour
 
 // Core fetch - throws on error (for functions that require data)
@@ -60,13 +63,32 @@ async function wordpressFetch<T>(
   const url = `${baseUrl}${path}${query ? `?${querystring.stringify(query)}` : ""}`;
 
   const response = await fetch(url, {
-    headers: { "User-Agent": USER_AGENT },
+    headers: {
+      "User-Agent": USER_AGENT,
+      Accept: "application/json",
+      Referer: baseUrl,
+      "X-Requested-With": "XMLHttpRequest",
+    },
     next: { tags, revalidate: CACHE_TTL },
   });
 
   if (!response.ok) {
     throw new WordPressAPIError(
       `WordPress API request failed: ${response.statusText}`,
+      response.status,
+      url
+    );
+  }
+
+  const contentType = response.headers.get("content-type") || "";
+  if (contentType.includes("text/html")) {
+    // Likely an anti-bot page or redirect HTML instead of JSON
+    const body = await response.text();
+    throw new WordPressAPIError(
+      `Expected JSON but received HTML from WordPress (possible anti-bot). Response snippet: ${body.slice(
+        0,
+        200
+      )}`,
       response.status,
       url
     );
@@ -105,7 +127,12 @@ async function wordpressFetchPaginated<T>(
   const url = `${baseUrl}${path}${query ? `?${querystring.stringify(query)}` : ""}`;
 
   const response = await fetch(url, {
-    headers: { "User-Agent": USER_AGENT },
+    headers: {
+      "User-Agent": USER_AGENT,
+      Accept: "application/json",
+      Referer: baseUrl,
+      "X-Requested-With": "XMLHttpRequest",
+    },
     next: { tags, revalidate: CACHE_TTL },
   });
 
@@ -117,8 +144,22 @@ async function wordpressFetchPaginated<T>(
     );
   }
 
+  const contentType = response.headers.get("content-type") || "";
+  if (contentType.includes("text/html")) {
+    const body = await response.text();
+    throw new WordPressAPIError(
+      `Expected JSON but received HTML from WordPress (possible anti-bot). Response snippet: ${body.slice(
+        0,
+        200
+      )}`,
+      response.status,
+      url
+    );
+  }
+
+  const data = await response.json();
   return {
-    data: await response.json(),
+    data,
     headers: {
       total: parseInt(response.headers.get("X-WP-Total") || "0", 10),
       totalPages: parseInt(response.headers.get("X-WP-TotalPages") || "0", 10),
