@@ -48,7 +48,9 @@ export interface WordPressResponse<T> {
 const USER_AGENT =
   process.env.WORDPRESS_USER_AGENT ||
   "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/120 Safari/537.36";
-const CACHE_TTL = 3600; // 1 hour
+
+// Cache TTL for WordPress fetches (seconds). Make configurable via env for faster sync.
+const CACHE_TTL = Number(process.env.WORDPRESS_CACHE_TTL) || 60; // default: 1 hour
 
 // Core fetch - throws on error (for functions that require data)
 async function wordpressFetch<T>(
