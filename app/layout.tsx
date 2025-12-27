@@ -12,7 +12,7 @@ import { mainMenu, contentMenu } from "@/menu.config";
 import { siteConfig } from "@/site.config";
 import { cn } from "@/lib/utils";
 
-import Logo from "@/public/logo.svg";
+import Logo from "@/public/logo.png";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -24,9 +24,9 @@ const font = FontSans({
 });
 
 export const metadata: Metadata = {
-  title: "WordPress & Next.js Starter by 9d8",
+  title: "Movie Insider - Your Source for Movie News and Reviews",
   description:
-    "A starter template for Next.js with WordPress as a headless CMS.",
+    "Stay updated with the latest movie news, reviews, and trailers on Movie Insider.",
   metadataBase: new URL(siteConfig.site_domain),
   alternates: {
     canonical: "/",

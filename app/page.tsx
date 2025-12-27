@@ -25,9 +25,7 @@ const ToDelete = () => {
   return (
     <main className="space-y-6">
       <Prose>
-        <h1>Headless WordPress built with the Next.js</h1>
-
-        
+        <h1>Latest news about movies, web series, and more</h1>
       </Prose>
 
       <div className="flex justify-between items-center gap-4">
