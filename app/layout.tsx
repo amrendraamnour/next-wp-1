@@ -79,7 +79,8 @@ const Nav = ({ className, children, id }: NavProps) => {
             className="dark:invert"
             width={42}
             height={26.44}
-          ></Image>
+          />
+
           <h2 className="text-sm">{siteConfig.site_name}</h2>
         </Link>
         {children}
@@ -94,7 +95,7 @@ const Nav = ({ className, children, id }: NavProps) => {
             ))}
           </div>
           <Button asChild className="hidden sm:flex">
-            <Link href="https://dub.sh/next-wp">Get Started</Link>
+            <Link href="/">Subscribe</Link>
           </Button>
           <MobileNav />
         </div>
@@ -149,7 +150,7 @@ const Footer = () => {
         <Container className="border-t not-prose flex flex-col md:flex-row md:gap-2 gap-6 justify-between md:items-center">
           <ThemeToggle />
           <p className="text-muted-foreground">
-            &copy; <a href="https://9d8.dev">9d8</a>. All rights reserved.
+            &copy; <a href="https://movieinsider.com">MOVIE INSIDER</a>. All rights reserved.
             2025-present.
           </p>
         </Container>
