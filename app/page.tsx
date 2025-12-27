@@ -41,7 +41,7 @@ const ToDelete = () => {
           <span>
             Posts{" "}
             <span className="block text-sm text-muted-foreground">
-              All posts from your WordPress
+              All posts
             </span>
           </span>
         </Link>
@@ -53,7 +53,7 @@ const ToDelete = () => {
           <span>
             Pages{" "}
             <span className="block text-sm text-muted-foreground">
-              Custom pages from your WordPress
+              All pages
             </span>
           </span>
         </Link>
@@ -65,7 +65,7 @@ const ToDelete = () => {
           <span>
             Authors{" "}
             <span className="block text-sm text-muted-foreground">
-              List of the authors from your WordPress
+              List of the authors
             </span>
           </span>
         </Link>
@@ -77,7 +77,7 @@ const ToDelete = () => {
           <span>
             Tags{" "}
             <span className="block text-sm text-muted-foreground">
-              Content by tags from your WordPress
+              Content by tags
             </span>
           </span>
         </Link>
@@ -89,7 +89,7 @@ const ToDelete = () => {
           <span>
             Categories{" "}
             <span className="block text-sm text-muted-foreground">
-              Categories from your WordPress
+              Categories
             </span>
           </span>
         </Link>
@@ -101,7 +101,7 @@ const ToDelete = () => {
           <span>
             Documentation{" "}
             <span className="block text-sm text-muted-foreground">
-              How to use `next-wp`
+              How to
             </span>
           </span>
         </a>
